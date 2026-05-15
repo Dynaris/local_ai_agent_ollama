@@ -1,6 +1,17 @@
 import os
 import subprocess
 
+run_python_file_schema = {
+      "type": "function",
+      "function": {
+        "name": "run_python_file",
+        "description": "Runs files in a specified directory relative to the working directory.",
+        "parameters": {
+          "type": "object",
+          "required": ["file_path"],
+          "properties": {
+            "file_path": {"type": "string", "description": "File path to list files from, relative to the working directory (default is the working directory itself)"}}}}}
+
 def run_python_file(working_directory, file_path, args=None):
 
     #get the absolute path for both work directory and file path

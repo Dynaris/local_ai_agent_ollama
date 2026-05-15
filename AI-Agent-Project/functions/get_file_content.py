@@ -1,6 +1,17 @@
 import os
 from config import MAX_CHARS
 
+get_file_content_schema = {
+      "type": "function",
+      "function": {
+        "name": "get_file_content",
+        "description": "Retrieves file content in a specified directory relative to the working directory.",
+        "parameters": {
+          "type": "object",
+          "required": ["file_path"],
+          "properties": {
+            "file_path": {"type": "string", "description": "File path to list files from, relative to the working directory (default is the working directory itself)"}}}}}
+
 def get_file_content(working_directory, file_path):
 
     working_directory_abs = os.path.abspath(working_directory)

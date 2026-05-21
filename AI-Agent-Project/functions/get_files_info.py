@@ -9,22 +9,22 @@ get_files_info_schema = {
           "type": "object",
           "required": [],
           "properties": {
-            "directory": {"type": "string", "description": "Directory path to list files from, relative to the working directory (default is the working directory itself)"}}}}}
+            "path": {"type": "string", "description": "Directory path to list files from, relative to the working directory (default is the working directory itself)"}}}}}
 
-def get_files_info(working_directory, directory="."):
+def get_files_info(working_directory, path="."):
 
     working_directory_abs = os.path.abspath(working_directory)
-    target_dir = os.path.normpath(os.path.join(working_directory_abs, directory))
+    target_dir = os.path.normpath(os.path.join(working_directory_abs, path))
 
     dir_list = [working_directory_abs, target_dir]
 
     valid_target_dir = os.path.commonpath(dir_list)
 
     if valid_target_dir != working_directory_abs:
-        return f'Error: Cannot list "{directory}" as it is outside the permitted working directory'
+        return f'Error: Cannot list "{path}" as it is outside the permitted working directory'
     
     if not os.path.isdir(target_dir):
-        return f'Error: "{directory}" is not a directory'
+        return f'Error: "{path}" is not a directory'
 
     result_list = []
 

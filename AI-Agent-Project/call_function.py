@@ -2,7 +2,6 @@ from functions.get_files_info import get_files_info_schema, get_files_info
 from functions.get_file_content import get_file_content_schema, get_file_content
 from functions.run_python_file import run_python_file_schema, run_python_file
 from functions.write_file import write_file_schema, write_file
-import copy
 
 #AI Agent available tooling
 tool_mapping = {
@@ -34,25 +33,25 @@ def call_function(tool_call ,verbose=False):
 
     #Ensuring the key exists, or return an error instead
     if function_name in tool_mapping:
+        #Check if verbose was used in the prompt submission
+        if verbose:
+            print(f"Calling function: {function_name}({function_args})")
+        else:
+            print(f" - Calling function: {function_name}")
         tool_response = tool_mapping[function_name](**function_args)
         result = {
             "role": "tool",
             "name": function_name,
             "content": tool_response}
     else:
-        return f'"error": "Unknown function: {function_name}'
-    
-    #Check if verbose was used in the prompt submission
+        return {
+            "role": "tool",
+            "name": function_name,
+            "content": f"Error: Unknown function: {function_name}"
+        }
+
+    # ... after the call:
     if verbose:
         print(f'-> {result["content"]}')
-    else:
-        print(f" - Calling function: {function_name}")
 
-    if result is None:
-        raise Exception("The tool response was not valid as no value was returned.")
-    elif "role" not in result or "name" not in result or "content" not in result:
-        raise Exception("The tool response was not valid as one or more keys are not valid.")
-    elif result["role"] == "" or result["name"] == "" or result["content"] == "":
-        raise Exception("The tool response was not valid as one or more key values were missing.")
-    else:
-        return result
+    return result

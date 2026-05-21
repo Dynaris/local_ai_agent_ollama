@@ -8,14 +8,14 @@ run_python_file_schema = {
         "description": "Runs files in a specified directory relative to the working directory.",
         "parameters": {
           "type": "object",
-          "required": ["file_path"],
+          "required": ["path"],
           "properties": {
-            "file_path": {"type": "string", "description": "File path to list files from, relative to the working directory (default is the working directory itself)"}}}}}
+            "path": {"type": "string", "description": "File path to list files from, relative to the working directory (default is the working directory itself)"}}}}}
 
-def run_python_file(working_directory, file_path, args=None):
+def run_python_file(working_directory, path, args=None):
 
     #get the absolute path for both work directory and file path
-    target_file_path = os.path.normpath(os.path.join(working_directory, file_path))
+    target_file_path = os.path.normpath(os.path.join(working_directory, path))
     abs_file_path = os.path.abspath(target_file_path)
     abs_working_directory = os.path.abspath(working_directory)
 
@@ -25,13 +25,13 @@ def run_python_file(working_directory, file_path, args=None):
 
     ### set configurations for different outcomes ###
     if abs_working_directory != final_absolute_dir:
-        return f'Error: Cannot execute "{file_path}" as it is outside the permitted working directory'
+        return f'Error: Cannot execute "{path}" as it is outside the permitted working directory'
 
     if not os.path.isfile(abs_file_path):
-        return f'Error: "{file_path}" does not exist or is not a regular file'
+        return f'Error: "{path}" does not exist or is not a regular file'
 
-    if not file_path.endswith(".py"):
-        return f'Error: "{file_path}" is not a Python file'
+    if not path.endswith(".py"):
+        return f'Error: "{path}" is not a Python file'
     
     ###
 

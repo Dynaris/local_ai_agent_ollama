@@ -1,14 +1,17 @@
 import os
 import requests
 import argparse
+import sys
 
 from dotenv import load_dotenv
 from prompts import system_prompt
 from call_function import tool_mapping, tools, call_function
 
-load_dotenv()
+load_dotenv(override=True)
 OLLAMA_URL = os.getenv("OLLAMA_URL")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL")
+
+print("This output is powered by:", OLLAMA_MODEL)
 
 #debug print(OLLAMA_URL, OLLAMA_MODEL) 
 
@@ -20,62 +23,52 @@ messages = []
 #system prompt
 messages.append({"role": "system", "content": system_prompt})
 
-def generate(prompt, messages, verbose=False, working_directory = os.getcwd()):
+def generate(prompt, messages, verbose=False):
 
     #user input
     messages.append({"role": "user", "content": prompt})
 
-    response = requests.post(OLLAMA_URL, json={
-            "model": OLLAMA_MODEL,
-            "messages": messages,
-            "stream": False,
-            "tools": tools
-        }
-    )
-    
-    #Debug
-    #print("RAW RESPONSE:", response.text)
-    #print("PARSED:", data)
-
-    data = response.json()
-
-    #Debug 2
-    #print("DATA:", data)
-
-    #extract tool calls and their descriptive name + args (tool calls are function calls)
-    if "tool_calls" in data["message"] and data["message"]["tool_calls"]:
-        for tool_call in data["message"]["tool_calls"]:
-            tool_response = call_function(tool_call, verbose)
-
-            #add tool result to history
-            messages.append(tool_response)
-
+    for _ in range(20):
         response = requests.post(OLLAMA_URL, json={
-            "model": OLLAMA_MODEL,
-            "messages": messages,
-            "stream": False,
-            "tools": tools
+                "model": OLLAMA_MODEL,
+                "messages": messages,
+                "stream": False,
+                "tools": tools
             }
         )
 
-        #replace the first response with the second one (updated ver. after tool execution)
+        #Debug
+        #print("RAW RESPONSE:", response.text)
+        #print("PARSED:", data)
+
         data = response.json()
-        reply = data["message"]["content"]
 
-        #extract updated assistant reply
-        messages.append({
-            "role": "assistant", 
-            "content": reply })
+        #Debug 2
+        #print("DATA:", data)
 
+        #extract tool calls and their descriptive name + args (tool calls are function calls)
+        if "tool_calls" in data["message"] and data["message"]["tool_calls"]:
+            
+            #append tool request message
+            messages.append(data["message"])
+
+            for tool_call in data["message"]["tool_calls"]:
+                tool_response = call_function(tool_call, verbose)
+                
+                #add tool result to history
+                messages.append(tool_response)
+
+                #Debug 3
+                #print(tool_response)
+                #print(data["message"])
+
+        else:
+            #add assistant reply to history if tool calls don't exist
+            messages.append(data["message"])
+            break
     else:
-        
-        #extract assistant reply
-        reply = data["message"]["content"]
-
-        #add assistant reply to history if tool calls don't exist
-        messages.append({
-            "role": "assistant", 
-            "content": reply })
+        print(f"Maximum number of iterations reached. The model did not produce a final response.")
+        sys.exit(1)
 
     return data
 
@@ -93,7 +86,7 @@ def main():
     response = generate(user_input, messages, args.verbose)
 
     if args.verbose:
-        print(f'User prompt:{response["message"]["content"]}')
+        print(f'Final response:{response["message"]["content"]}')
         print(f'Prompt tokens:{response.get("prompt_eval_count")}')
         print(f'Response tokens:{response.get("eval_count")}')
     else:

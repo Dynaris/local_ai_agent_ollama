@@ -3,20 +3,16 @@ import requests
 import argparse
 import sys
 
-from dotenv import load_dotenv
-from prompts import system_prompt
-from call_function import tool_mapping, tools, call_function
-
-load_dotenv(override=True)
-OLLAMA_URL = os.getenv("OLLAMA_URL")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL")
+from system_prompt import system_prompt
+from call_function import tools, call_function
+from config import OLLAMA_MODEL, OLLAMA_URL
 
 print("This output is powered by:", OLLAMA_MODEL)
 
 #debug print(OLLAMA_URL, OLLAMA_MODEL) 
 
 if OLLAMA_URL == None or OLLAMA_MODEL == None:
-    raise RuntimeError("No Ollama URL or Ollama model detected. Cannot proceed.")
+    raise RuntimeError("Invalid, unsupported or no LLM detected. Cannot proceed.")
 
 messages = []
 
@@ -42,6 +38,7 @@ def generate(prompt, messages, verbose=False):
         #print("PARSED:", data)
 
         data = response.json()
+        
 
         #Debug 2
         #print("DATA:", data)

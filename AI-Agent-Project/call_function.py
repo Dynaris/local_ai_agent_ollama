@@ -29,7 +29,7 @@ def call_function(tool_call ,verbose=False):
     
     #Protection against "arguments" value being None
     function_args = dict(tool_call["function"]["arguments"]) if tool_call["function"]["arguments"] else {}
-    function_args["working_directory"] = "./calculator"
+    function_args["working_directory"] = "./working_dir"
 
     #Ensuring the key exists, or return an error instead
     if function_name in tool_mapping:

@@ -10,11 +10,6 @@ AVAILABLE TOOLS:
 
 PATH RULES (most important):
 All file paths are relative to the working directory.
-NEVER include "calculator/" or any working directory name in your paths.
-
-CORRECT:   file_path="pkg/calculator.py"
-WRONG:     file_path="calculator/pkg/calculator.py"
-WRONG:     file_path="./calculator/pkg/calculator.py"
 
 BEHAVIOR:
 - You are called in a loop. Take one step at a time.

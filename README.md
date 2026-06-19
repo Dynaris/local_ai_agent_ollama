@@ -15,7 +15,7 @@ This is a Python-based Ollama API Agent that besides the normal functions of an 
 
 ## Demo
 
-![AI Agent Demo](video_demo/AIAgentDemo.gif)
+![AI Agent Demo](AI-Agent-Project/video_demo/AIAgentDemo.gif)
 
 Full video [here](https://github.com/user-attachments/assets/7f56d7fd-9394-4b9e-a5a0-dc704b46269e) or in `video_demo` directory.
 

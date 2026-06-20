@@ -1,5 +1,5 @@
 
-# Ollama API AI Agent
+# Local AI Agent for Ollama
 
 This is a Python-based Ollama API Agent that besides the normal functions of an AI, can read, write, check the contents and the properties of files via function calls.
 
@@ -15,7 +15,7 @@ This is a Python-based Ollama API Agent that besides the normal functions of an 
 
 ## Demo
 
-![AI Agent Demo](AI-Agent-Project/video_demo/AIAgentDemo.gif)
+![AI Agent Demo](AI_Agent/video_demo/AIAgentDemo.gif)
 
 Full video [here](https://github.com/user-attachments/assets/7f56d7fd-9394-4b9e-a5a0-dc704b46269e) or in `video_demo` directory.
 
@@ -35,20 +35,25 @@ Full video [here](https://github.com/user-attachments/assets/7f56d7fd-9394-4b9e-
     ```
     - If using **Windows**, follow the installation path provided by the executable.
 
-3. Open `src/LLM/config.py` and configure `OLLAMA_MODEL`.
+3. Open `AI_Agent/config.py` and configure `OLLAMA_MODEL`.
 
-4. Clone the repository:
+4. Clone, and open the repository:
     
     ```bash
-    git clone https://github.com/Dynaris/Logform-Interp.git
-    cd logform-interp
+    git clone https://github.com/Dynaris/local_ai_agent_ollama
+    cd local_ai_agent_ollama
     ```
 
 5. Create a virtual environment:
 
-    ```bash
-    python3 -m venv .venv
-    ```
+    - Python:
+        ```bash
+        python3 -m venv .venv --upgrade-deps
+        ```
+    - UV:
+        ```bash
+        uv venv .venv
+        ```
 
 6. Activate the environment:
     - Linux/macOS:
@@ -62,9 +67,15 @@ Full video [here](https://github.com/user-attachments/assets/7f56d7fd-9394-4b9e-
         ```
 
 7. Install dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
+
+    - Python:
+        ```bash
+        python -m pip install -r AI_Agent/requirements.txt
+        ```
+    - UV:
+        ```bash
+        uv pip install -r AI_Agent/requirements.txt
+        ```
     
 ## Usage/Examples
 
@@ -72,10 +83,18 @@ Full video [here](https://github.com/user-attachments/assets/7f56d7fd-9394-4b9e-
 python main.py "Who are you?"
 ```
 
+```bash
+python main.py "Create a file named notes.txt"
+```
+
 or if you use UV:
 
 ```bash
-uv run main.py "Who are you?"
+uv run main.py "Show me the contents of file X"
+```
+
+```bash
+uv run main.py "Find the properties of file Y"
 ```
 
 You can also use `--verbose` to track token usage, for example:

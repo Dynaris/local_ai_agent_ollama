@@ -1,0 +1,6 @@
+.venv
+.env
+.python-version
+__pycache__/
+calculator/pkg/__pycache__/
+functions/__pycache__/

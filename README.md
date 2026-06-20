@@ -24,7 +24,7 @@ Full video [here](https://github.com/user-attachments/assets/7f56d7fd-9394-4b9e-
 
 Download your preferred Ollama model:
 
-1. Follow the installation instructions for Ollama [by clicking here](https://o2llama.com/download);
+1. Follow the installation instructions for Ollama [by clicking here](https://ollama.com/download);
 2. Download preferred model: 
 
     - If using **Linux**:
@@ -39,33 +39,34 @@ Download your preferred Ollama model:
 
 3. Open `src/LLM/config.py` and configure `OLLAMA_MODEL`.
 
-Clone the repository:
-
-```bash
-git clone https://github.com/Dynaris/Logform-Interp.git
-cd logform-interp
-```
-
-Create a virtual environment:
-
-```bash
-python3 -m venv .venv
-```
-
-- Linux/macOS:
+4. Clone the repository:
+    
     ```bash
-    source .venv/bin/activate
+    git clone https://github.com/Dynaris/Logform-Interp.git
+    cd logform-interp
     ```
 
-- Windows:
+5. Create a virtual environment:
+
     ```bash
-    .venv\Scripts\activate
+    python3 -m venv .venv
     ```
 
-Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+6. Activate the environment:
+    - Linux/macOS:
+        ```bash
+        source .venv/bin/activate
+        ```
+
+    - Windows:
+        ```bash
+        .venv\Scripts\activate
+        ```
+
+7. Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
     
 ## Usage/Examples
 

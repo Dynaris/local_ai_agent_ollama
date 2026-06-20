@@ -22,10 +22,8 @@ Full video [here](https://github.com/user-attachments/assets/7f56d7fd-9394-4b9e-
 
 ## Installation
 
-Download your preferred Ollama model:
-
 1. Follow the installation instructions for Ollama [by clicking here](https://ollama.com/download);
-2. Download preferred model: 
+2. Download preferred model ([click here for the list](https://ollama.com/search)): 
 
     - If using **Linux**:
     ```bash

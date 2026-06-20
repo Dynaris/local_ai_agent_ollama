@@ -3,6 +3,8 @@
 
 This is a Python-based Ollama API Agent that besides the normal functions of an AI, can read, write, check the contents and the properties of files via function calls.
 
+The current version of this application only supports localhost port `11434`, unless manually edited via the files, which is not explicit in this description.
+
 ## Disclaimer
 
 - This software is provided for personal and educational use only. The author assumes no responsibility or liability for any loss or damage resulting from the use of the information provided by this tool.
